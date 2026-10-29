@@ -4,22 +4,19 @@ using namespace cv;
 using namespace std;
 int main()
 {
-    VideoCapture cap("/home/majinfei/Videos/smartcar/test.mp4");
-    if(!cap.isOpened())
+    Mat src = imread("/home/majinfei/Pictures/180.jpg");
+    if (src.empty())
     {
-        std::cout<< "Error: Could not open video file." << std::endl;
+        cout << "Could not open or find the image" << endl;
         return -1;
     }
-    Mat frame;
-    while(true){
-        cap >> frame;
-        if(frame.empty()){
-            break;}
-        imshow("Video", frame);
-    if(waitKey(30) == 27){
-            break;}
-    }
-    cap.release();
-    destroyAllWindows();
+    int new_rows = src.rows / 2;
+    int new_cols = src.cols / 2;
+    int channels = src.channels();
+    Mat dist_resize;
+    resize(src, dist_resize, Size(new_cols, new_rows), 0, 0, INTER_LINEAR);
+    imshow("Original Image", src);
+    imshow("Resized Image", dist_resize);
+    waitKey(0);
     return 0;
 }
